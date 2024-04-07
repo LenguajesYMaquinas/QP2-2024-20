@@ -1,0 +1,62 @@
+//Universidad de los Andes
+//Lenguajes y Maquinas 4 - 2024-20
+//05.04.2024
+//Punto 1 QP2
+//@author: Juan Camilo Nieves Hernandez
+
+
+//Se dice que un autómata es de símbolos alternos si está
+//compuesto por máximo 12 estados (ayuda: priorice ¿qué debe recordar el autómata?) y reconoce el
+//lenguaje de todas las cadenas Ω sobre el alfabeto σ = (‘a’..‘k’) tal que:
+//- La cadena debe alternar entre consonantes y vocales del alfabeto dado.
+//- La cadena debe comenzar con una consonante y no puede tener dos vocales o dos consonantes
+//consecutivas.
+
+
+
+
+using gold.structures.automaton.*
+using gold.visualization.automaton.*
+
+
+using gold.structures.set.*
+
+procedure main(args:String[]) begin
+	q := {'C','V','E'}
+	Σ:= ('a'‥'k')
+	q₀:= 'V'
+	F:= {'C','V'}
+	M:=GDeterministicAutomaton(q,Σ ,q₀,F,δ)
+	GAutomataFrame.show(M)
+
+end
+
+//x estado actual
+//z estado siguiente
+function δ(x,z) begin
+	if x = 'V' and z ∈ {'a','e','i'} then return 'E'
+	
+	elseif x = 'V' and z ∈ {'b','c','d','f','g','h','j','k'} then return 'C'
+		
+	elseif x = 'E' then return 'E'
+	
+	elseif x = 'C' and z ∈ {'b','c','d','f','g','h','j','k'} then return 'E'
+		
+	elseif x = 'C' and z ∈ {'a','e','i'} then return 'V'
+		
+	elseif x = 'V' and z ∈ {'a','e','i'} then return 'E'
+	
+	elseif x = 'V' and z ∈ {'b','c','d','f','g','h','j','k'} then return 'C'
+		
+	
+	end
+
+end
+
+//BONO
+
+//a. ¿Por qué es el mínimo número de estados y no puede reducirse más?
+//Porque necesitamos un estado que se refiera a las vocales (terminal), uno a las consonantes(terminal), por medio
+// de los cuales nos estaremos moviendo para verificar que la palabra tenga los caracteres
+// alternados y en caso de repeticion tenemos que salir a un estado de error no terminal que determine que la 
+// cadena no es valida

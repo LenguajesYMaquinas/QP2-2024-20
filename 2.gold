@@ -1,0 +1,75 @@
+//Universidad de los Andes
+//Lenguajes y Maquinas 4 - 2024-20
+//21.03.2024
+// Esqueleto de DFA
+//@author: Johan Alexis Bautista Quinayas
+
+
+//El lenguaje de todas las cadenas ω sobre el alfabeto 𝐴 = {𝑎, 𝑏, 𝑐} tal que si 
+//un simbolo aparece, ese mismo símbolo no puede volver a aparecer en las siguientes
+//dos posiciones
+
+
+using gold.structures.automaton.*
+using gold.visualization.automaton.*
+
+
+using gold.structures.set.*
+
+procedure main(args:String[]) begin
+	
+
+//Se hace el powerset como conjunto de conjuntos, ya que al momento de utilizar el simbolo sale el siguiente error: se excedio el limite del powerset
+	q:= ((0‥3) × (0‥3) × (0‥3) × (0‥3) × ({false, true})) ∪ {⟨9,9,9,9, false⟩} 
+	Σ:= ('a'‥'d')
+	q₀:= ⟨0,0,0,0, false⟩
+	F:= {⟨a,b,c,d,true⟩ | a in (0‥3), b in (0‥3), c in (0‥3), d in (0‥3)}
+	//F:= {⟨2,1,1,1,true⟩}
+	M:=GDeterministicAutomaton(q,Σ,q₀,F,δ)
+	//GAutomataFrame.show(M)
+	Utilities.test(M)
+end
+
+
+function δ(⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩,z) begin
+	if conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, true⟩
+	elseif conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, true⟩
+	elseif conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c  + 1, conteo_d, true⟩
+	elseif conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c, conteo_d  + 1, true⟩
+	
+	elseif conteo_a > 0 and conteo_c > 0 and conteo_d > 0 and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_c > 0 and conteo_d > 0 and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_c > 0 and conteo_d > 0 and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c  + 1, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_c > 0 and conteo_d > 0 and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c, conteo_d  + 1, true⟩
+	
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_d > 0 and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_d > 0 and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_d > 0 and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c  + 1, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_d > 0 and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c, conteo_d  + 1, true⟩
+	
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c  + 1, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c, conteo_d  + 1, true⟩
+	
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c  + 1, conteo_d, true⟩
+	elseif conteo_a > 0 and conteo_b > 0 and conteo_c > 0 and conteo_d > 0 and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c, conteo_d  + 1, true⟩
+	
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ = ⟨0,0,0,0, false⟩ and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c, conteo_d, condicion⟩
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ = ⟨0,0,0,0, false⟩ and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, condicion⟩
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ = ⟨0,0,0,0, false⟩ and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c + 1, conteo_d, condicion⟩
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ = ⟨0,0,0,0, false⟩ and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c,  conteo_d + 1, condicion⟩	
+	
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ != ⟨0,0,0,0, false⟩ and z = 'a' and conteo_a < 3 then return ⟨conteo_a + 1, conteo_b, conteo_c,  conteo_d, condicion⟩	
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ != ⟨0,0,0,0, false⟩ and z = 'b' and conteo_b < 3 then return ⟨conteo_a, conteo_b + 1, conteo_c, conteo_d, condicion⟩
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ != ⟨0,0,0,0, false⟩ and z = 'c' and conteo_c < 3 then return ⟨conteo_a, conteo_b, conteo_c + 1, conteo_d, condicion⟩
+	elseif ⟨conteo_a, conteo_b, conteo_c, conteo_d, condicion⟩ != ⟨0,0,0,0, false⟩ and z = 'd' and conteo_d < 3 then return ⟨conteo_a, conteo_b, conteo_c,  conteo_d + 1, condicion⟩
+	
+	
+	else return ⟨9,9,9,9, false⟩
+	end
+end
+
+
